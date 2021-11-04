@@ -1,0 +1,18 @@
+type Jam @model @auth(rules: [{allow: public}]) @key(name: "byArea", fields: ["areaID"]) @key(name: "byUser", fields: ["userID"]) {
+  id: ID!
+  jam: String
+  areaID: ID
+  userID: ID
+}
+
+type Area @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  zip: String
+  Jams: [Jam] @connection(keyName: "byArea", fields: ["id"])
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  Jams: [Jam] @connection(keyName: "byUser", fields: ["id"])
+}
